@@ -43,8 +43,10 @@ df.head()
 
 
 # Диапазоны значений колонок
+print('Диапазоны значений колонок:', '\n')
+
 for column in df.columns:
-    print(column, df[column].unique())
+    print(column, df[column].unique().tolist(), '\n', '\n')
 
 
 # # Вычисление коэффициентов
@@ -246,7 +248,6 @@ def significance(
 # In[16]:
 
 
-# Функция нигде не используется.
 def significance_column(df: pd.DataFrame,
                         SL: float = 0.05):
 
@@ -385,7 +386,8 @@ significance_column(df_result)
 # In[20]:
 
 
-df_result.head()
+print('df_result.head()', '\n')
+print(df_result.head().to_string(), '\n', '\n')
 
 
 # In[21]:
@@ -456,7 +458,8 @@ df_result_comparison_out = (pd.DataFrame(result_comparison_out_list, columns=col
 # In[26]:
 
 
-df_result_comparison_out
+print('df_result_comparison_out.head()', '\n')
+print(df_result_comparison_out.head().to_string(), '\n', '\n')
 
 
 # In[27]:
@@ -474,8 +477,9 @@ p_dict = {'=': 0, '>': 1, '<': -1}
 df_result_comparison_out['Значимое отличие (p < {} int)'.format(SL)] = (df_result_comparison_out['Значимое отличие (p < {})'.format(SL)]
     .apply(lambda x: p_dict[x]))
 # Суммирование по колонке "Значимое отличие (p < 0.05) int" внутри каждой группы.
-(df_result_comparison_out.groupby(['Муниципалитет 1', 'Муниципалитет 2', 'Пол', 'Причина смерти'], as_index=False)
-    ['Значимое отличие (p < {} int)'.format(SL)].sum())
+print('Суммирование по колонке "Значимое отличие (p < 0.05) int" внутри каждой группы.', '\n')
+print((df_result_comparison_out.groupby(['Муниципалитет 1', 'Муниципалитет 2', 'Пол', 'Причина смерти'], as_index=False)
+    ['Значимое отличие (p < {} int)'.format(SL)].sum()).to_string(), '\n', '\n')
 
 
 # In[29]:
@@ -562,13 +566,15 @@ df_result_comparison_in_death_cause = (pd.DataFrame(result_comparison_in_death_c
 # In[34]:
 
 
-df_result_comparison_in_gender
+print('df_result_comparison_in_gender', '\n')
+print(df_result_comparison_in_gender.to_string(), '\n', '\n')
 
 
 # In[35]:
 
 
-df_result_comparison_in_death_cause
+print('df_result_comparison_in_death_cause.head()', '\n')
+print(df_result_comparison_in_death_cause.head().to_string(), '\n', '\n')
 
 
 # In[36]:
@@ -580,8 +586,9 @@ df_result_comparison_in_death_cause['Значимое отличие (p < {} int
 (df_result_comparison_in_death_cause['Значимое отличие (p < {})'.format(SL)]
     .apply(lambda x: p_dict[x]))
 # Суммирование по колонке "Значимое отличие (p < 0.05) int" внутри каждой группы.
-(df_result_comparison_in_death_cause.groupby(['Муниципалитет', 'Пол', 'Причина смерти 1', 'Причина смерти 2'], as_index=False)
-    ['Значимое отличие (p < {} int)'.format(SL)].sum())
+print('Суммирование по колонке "Значимое отличие (p < 0.05) int" внутри каждой группы.', '\n')
+print((df_result_comparison_in_death_cause.groupby(['Муниципалитет', 'Пол', 'Причина смерти 1', 'Причина смерти 2'], as_index=False)
+    ['Значимое отличие (p < {} int)'.format(SL)].sum()).to_string(), '\n', '\n')
 
 
 # In[37]:
@@ -645,7 +652,8 @@ df_result_regression = (pd.DataFrame(result_regression_list, columns=columns_reg
 # In[42]:
 
 
-df_result_regression
+print('df_result_regression', '\n')
+print(df_result_regression.to_string())
 
 
 # In[43]:
@@ -654,4 +662,3 @@ df_result_regression
 # Короткий вывод:
 # 1) в Районе 2 статистически значимо обнаружен рост мужской смертности в исследуемом диапазоне дат
 # 2) в Районе 3 статистически значимо обнаружено снижение смертности от болезней сердца в исследуемом диапазоне дат
-
