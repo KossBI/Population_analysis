@@ -93,41 +93,49 @@ def get_slice(
     if year is None:
         if target is None:
             df_slice = (df[(df['Муниципалитет']==district)]
-                .groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
+                .groupby(['Возрастная группа', 'Стандартный вес группы', 'Пол'], as_index=False)
                 .agg({'Число умерших': 'sum', 'Численность населения': 'mean'}))
-
+            df_slice = (df_slice.groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
+                .agg({'Число умерших': 'sum', 'Численность населения': 'sum'}))
+        
         elif target in df['Причина смерти'].unique():
             df_slice = (df[(df['Муниципалитет']==district)&(df['Причина смерти']==target)]
-                .groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
+                .groupby(['Возрастная группа', 'Стандартный вес группы', 'Пол'], as_index=False)
                 .agg({'Число умерших': 'sum', 'Численность населения': 'mean'}))
-
+            df_slice = (df_slice.groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
+                .agg({'Число умерших': 'sum', 'Численность населения': 'sum'}))
+        
         elif target in df['Пол'].unique():
             df_slice = (df[(df['Муниципалитет']==district)&(df['Пол']==target)]
                 .groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
                 .agg({'Число умерших': 'sum', 'Численность населения': 'mean'}))
-
+        
         else:
             raise ValueError("Неверное значение target, выполнение прервано")
-
+    
     else:
         if target is None:
             df_slice = (df[(df['Муниципалитет']==district)&(df['Год']==year)]
-                .groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
+                .groupby(['Возрастная группа', 'Стандартный вес группы', 'Пол'], as_index=False)
                 .agg({'Число умерших': 'sum', 'Численность населения': 'first'}))
-
+            df_slice = (df_slice.groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
+                .agg({'Число умерших': 'sum', 'Численность населения': 'sum'}))
+        
         elif target in df['Причина смерти'].unique():
             df_slice = (df[(df['Муниципалитет']==district)&(df['Год']==year)&(df['Причина смерти']==target)]
-                .groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
+                .groupby(['Возрастная группа', 'Стандартный вес группы', 'Пол'], as_index=False)
                 .agg({'Число умерших': 'sum', 'Численность населения': 'first'}))
-
+            df_slice = (df_slice.groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
+                .agg({'Число умерших': 'sum', 'Численность населения': 'sum'}))
+        
         elif target in df['Пол'].unique():
             df_slice = (df[(df['Муниципалитет']==district)&(df['Год']==year)&(df['Пол']==target)]
                 .groupby(['Возрастная группа', 'Стандартный вес группы'], as_index=False)
                 .agg({'Число умерших': 'sum', 'Численность населения': 'first'}))
-
+        
         else:
             raise ValueError("Неверное значение target, выполнение прервано")
-
+        
     return df_slice
 
 
